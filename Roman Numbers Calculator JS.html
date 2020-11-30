@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Roman Numbers Calculator :)</title>
+</head>
+<body>
+	<script>		
+		var romanDefault = new Array("I", "V", "X", "L", "C", "D", "M");
+		var romanToArabicDefault = new Array(1, 5, 10, 50, 100, 500, 1000);
+		
+		function romanToArabic(roman) {
+			let arabicArr = new Array();
+			for (let i = 0; i < roman.length; i++) {  // Создаем массив арабских чисел
+				for (let k = 0; k < 7; k++) {  // Проверяем, какая римская цифра перед нами
+					if (roman[i] == romanDefault[k]) {
+						arabicArr[i] = romanToArabicDefault[k];
+						break;
+					}
+					else 
+						continue;
+				}
+			}
+			// alert("Массив арабских числел" + arabicArr); 
+
+			arabicSum = 0
+			for (i = 0; i < arabicArr.length; i++) {  // Переводим массив в арабское число
+				if (arabicArr[i] < arabicArr[i + 1]) {
+					arabicSum = arabicSum + arabicArr[i + 1] - arabicArr[i];
+					i = i + 1;
+				}
+				else arabicSum = arabicSum + arabicArr[i];
+			}
+		return arabicSum;
+		}
+		
+		function calculate(arabicNum1, arabicNum2, operation) {  // Вычислитель
+			switch (operation) {
+				case "+":
+					return arabicNum1 + arabicNum2;
+				case "-":
+					return arabicNum1 - arabicNum2;
+				case "*":
+					return arabicNum1 * arabicNum2;
+				case "/":
+					return arabicNum1 / arabicNum2;
+			}
+		}
+		
+		function arabicToRoman(arabic) {     // Перевод арабского числа в римское
+			let romanSum = "";               // Условия в else if не нужны, но я
+			while (arabic >= 900) {          // оставил их для лучшего понимания
+				if (arabic >= 1000) {
+					romanSum = romanSum + "M";
+					arabic = arabic - 1000;
+				}
+				else if (arabic >= 900) {
+					romanSum = romanSum + "CM";
+					arabic = arabic - 900;
+				}
+			}
+			
+			while (arabic >= 400) {
+				if (arabic >= 500) {
+					romanSum = romanSum + "D";
+					arabic = arabic - 500;
+				}
+				else if (arabic < 500) {
+					romanSum = romanSum + "CD";
+					arabic = arabic - 400;
+				}
+			}
+			
+			while (arabic >= 90) {
+				if (arabic >= 100) {
+					romanSum = romanSum + "C";
+					arabic = arabic - 100;
+				}
+				else if (arabic >= 90) {
+					romanSum = romanSum + "XC";
+					arabic = arabic - 90;
+				}
+			}
+			
+			while (arabic >= 40) {
+				if (arabic >= 50) {
+					romanSum = romanSum + "L";
+					arabic = arabic - 50;
+				}
+				else if (arabic < 50) {
+					romanSum = romanSum + "XL";
+					arabic = arabic - 40;
+				}
+			}
+			
+			while (arabic >= 9) {
+				if (arabic >= 10) {
+					romanSum = romanSum + "X";
+					arabic = arabic - 10;
+				}
+				else if (arabic >= 9) {
+					romanSum = romanSum + "IX";
+					arabic = arabic - 9;
+				}
+			}
+				
+			while (arabic >= 4) {
+				if (arabic >= 5) {
+					romanSum = romanSum + "V";
+					arabic = arabic - 5;
+				}
+				else if (arabic < 5) {
+					romanSum = romanSum + "IV";
+					arabic = arabic - 4;
+				}
+			}
+			
+			while (arabic != 0) {
+				romanSum = romanSum + "I";
+				arabic = arabic - 1
+			}
+			return romanSum;
+		}
+		
+		var romanNum1 = prompt("Введите первое римское число:");
+		var romanNum2 = prompt("Введите второе римское число:");
+		var operation = prompt("Выберите операцию (+, -, *, /)");
+		
+		var arabicNum1 = romanToArabic(romanNum1);
+		var arabicNum2 = romanToArabic(romanNum2);
+		var calc = calculate(arabicNum1, arabicNum2, operation);
+		alert("Результат вычисления на арабских цифрах: " + calc);
+		alert("Результат вычиисления на римских цифрах: " + arabicToRoman(calc));
+	</script>
+</body>
+</html>
